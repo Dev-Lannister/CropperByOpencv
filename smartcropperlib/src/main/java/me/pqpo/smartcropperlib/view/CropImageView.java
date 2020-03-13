@@ -38,6 +38,7 @@ public class CropImageView extends ImageView {
 
     private static final float TOUCH_POINT_CATCH_DISTANCE = 15; //dp，触摸点捕捉到锚点的最小距离
     private static final float POINT_RADIUS = 7.5f; // dp，锚点绘制半价
+    private static final float DRAGGING_POINT_RADIUS = 12.5f; // dp，拖动的锚点半径
     private static final float MAGNIFIER_CROSS_LINE_WIDTH = 0.8f; //dp，放大镜十字宽度
     private static final float MAGNIFIER_CROSS_LINE_LENGTH = 3; //dp， 放大镜十字长度
     private static final float MAGNIFIER_BORDER_WIDTH = 1; //dp，放大镜边框宽度
@@ -600,8 +601,13 @@ public class CropImageView extends ImageView {
             return;
         }
         for (Point point : mCropPoints) {
-            canvas.drawCircle(getViewPointX(point), getViewPointY(point), dp2px(POINT_RADIUS), mPointFillPaint);
-            canvas.drawCircle(getViewPointX(point), getViewPointY(point), dp2px(POINT_RADIUS), mPointPaint);
+            if (mDraggingPoint != null && mDraggingPoint.equals(point)) {
+                canvas.drawCircle(getViewPointX(point), getViewPointY(point), dp2px(DRAGGING_POINT_RADIUS), mPointFillPaint);
+                canvas.drawCircle(getViewPointX(point), getViewPointY(point), dp2px(DRAGGING_POINT_RADIUS), mPointPaint);
+            } else {
+                canvas.drawCircle(getViewPointX(point), getViewPointY(point), dp2px(POINT_RADIUS), mPointFillPaint);
+                canvas.drawCircle(getViewPointX(point), getViewPointY(point), dp2px(POINT_RADIUS), mPointPaint);
+            }
         }
         if (mShowEdgeMidPoint) {
             setEdgeMidPoints();
