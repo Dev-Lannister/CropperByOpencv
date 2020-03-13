@@ -37,7 +37,7 @@ public class CropImageView extends ImageView {
     private static final String TAG = "CropImageView";
 
     private static final float TOUCH_POINT_CATCH_DISTANCE = 15; //dp，触摸点捕捉到锚点的最小距离
-    private static final float POINT_RADIUS = 10; // dp，锚点绘制半价
+    private static final float POINT_RADIUS = 7.5f; // dp，锚点绘制半价
     private static final float MAGNIFIER_CROSS_LINE_WIDTH = 0.8f; //dp，放大镜十字宽度
     private static final float MAGNIFIER_CROSS_LINE_LENGTH = 3; //dp， 放大镜十字长度
     private static final float MAGNIFIER_BORDER_WIDTH = 1; //dp，放大镜边框宽度
@@ -49,7 +49,7 @@ public class CropImageView extends ImageView {
     private static final float DEFAULT_GUIDE_LINE_WIDTH = 0.3f;//dp
     private static final int DEFAULT_GUIDE_LINE_COLOR = Color.WHITE;
     private static final int DEFAULT_POINT_FILL_COLOR = Color.WHITE;
-    private static final int DEFAULT_POINT_FILL_ALPHA = 175;
+    private static final int DEFAULT_POINT_FILL_ALPHA = 0;
 
     private Paint mPointPaint;
     private Paint mPointFillPaint;
@@ -132,6 +132,7 @@ public class CropImageView extends ImageView {
         mLineWidth = ta.getDimension(R.styleable.CropImageView_civLineWidth, dp2px(DEFAULT_LINE_WIDTH));
         mPointColor = ta.getColor(R.styleable.CropImageView_civPointColor, DEFAULT_LINE_COLOR);
         mPointWidth = ta.getDimension(R.styleable.CropImageView_civPointWidth, dp2px(DEFAULT_LINE_WIDTH));
+
         mMagnifierCrossColor = ta.getColor(R.styleable.CropImageView_civMagnifierCrossColor, DEFAULT_MAGNIFIER_CROSS_COLOR);
         mShowMagnifier = ta.getBoolean(R.styleable.CropImageView_civShowMagnifier, false);
         mGuideLineWidth = ta.getDimension(R.styleable.CropImageView_civGuideLineWidth, dp2px(DEFAULT_GUIDE_LINE_WIDTH));
@@ -858,10 +859,14 @@ public class CropImageView extends ImageView {
             int width = drawable.getIntrinsicWidth();
             int height = drawable.getIntrinsicHeight();
             //在此处修改初始crop大小及位置 lijiwei.modify
-            points[0] = new Point(width / 3, height / 5);
-            points[1] = new Point(width / 2, height / 5);
-            points[2] = new Point(width / 2, height / 3);
-            points[3] = new Point(width / 3, height / 3);
+            /*points[0] = new Point(152, 114);
+            points[1] = new Point(809, 114);
+            points[2] = new Point(809, 607);
+            points[3] = new Point(152, 607);*/
+            points[0] = new Point((int) Math.round(width * 0.16), (int) Math.round(height * 0.16));
+            points[1] = new Point((int) Math.round(width * 0.84), (int) Math.round(height * 0.16));
+            points[2] = new Point((int) Math.round(width * 0.84), (int) Math.round(height * 0.84));
+            points[3] = new Point((int) Math.round(width * 0.16), (int) Math.round(height * 0.84));
         }
         return points;
     }
